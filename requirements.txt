@@ -1,0 +1,4 @@
+opencv-python
+ultralytics
+easyocr
+supervision==0.2.1
