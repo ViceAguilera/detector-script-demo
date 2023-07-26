@@ -121,7 +121,6 @@ def main():
             detections=detections,
             labels=labels
         )
-
         frame_nmr += 1
 
     cap.release()
