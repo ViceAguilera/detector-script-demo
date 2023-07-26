@@ -123,9 +123,7 @@ def main():
         )
 
         frame_nmr += 1
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
+        
     cap.release()
 
 if __name__ == "__main__":
