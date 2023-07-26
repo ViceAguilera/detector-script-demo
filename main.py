@@ -122,13 +122,11 @@ def main():
             labels=labels
         )
 
-        cv2.imshow("YOLOv8", frame)
         frame_nmr += 1
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     cap.release()
-    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     main()
