@@ -114,7 +114,7 @@ def main():
                 print("License plate:", license_plate_text)
                 print("Detected with", "{:.2f}".format(license_plate_text_score * 100), "% confidence")
                 photo = "sample" + str(frame_nmr) + ".jpg"
-                #http_post(license_plate_text_score, photo, license_plate_text)
+                http_post(license_plate_text_score, photo, license_plate_text)
 
         labels = [
             f"{license_plate_model.model.names[class_id]} {confidence:0.2f}"
