@@ -1,5 +1,8 @@
-import requests
+"""
+Main script for processing license plate detection and recognition.
+"""
 import json
+import requests
 import cv2
 import easyocr
 from ultralytics import YOLO
@@ -30,10 +33,9 @@ def http_post(score, img_name, text):
 
     json_data = json.dumps(data)
 
-    # Configurar las cabeceras de la solicitud
     headers = {'Content-Type': 'application/json'}
 
-    response = requests.post(url, data=json_data, headers=headers)
+    response = requests.post(url, data=json_data, headers=headers, timeout=10)
 
     if response.status_code == 200:
         print("The request was sent successfully.")
@@ -55,27 +57,27 @@ def read_license_plate(license_plate_crop):
     detections = reader.readtext(license_plate_crop)
 
     for detection in detections:
-        bbox, text, score = detection
+        _, text, score = detection
 
         text = text.upper().replace(' ', '')
-        if len(text) >= 6 and len(text) <= 10 and text.isalnum() and score >= 0.7 and text.isalpha() == False:
+        if len(text) >= 6 and len(text) <= 10 and text.isalnum() and score >= 0.7 and not text.isalpha():
             return text, score
 
     return None, None
 
 def main():
     """
-    Main function.
+    Main function
     """
     frame_width = 1280
     frame_height = 720
 
-    cap = cv2.VideoCapture("sample.mp4")
+    cap = cv2.VideoCapture("video/sample.mp4")
 
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, frame_width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
 
-    license_plate_model = YOLO('licence_plate.pt')
+    license_plate_model = YOLO('model/licence_plate.pt')
 
     box_annotator = sv.BoxAnnotator(
         thickness=2,
@@ -100,16 +102,19 @@ def main():
             _, license_plate_crop_thresh = cv2.threshold(license_plate_crop_gray, 150, 255, cv2.THRESH_BINARY)
             license_plate_text, license_plate_text_score = read_license_plate(license_plate_crop_thresh)
 
-
             if license_plate_text is not None:
                 results[frame_nmr] = {
-                    'license_plate': {'bbox': [x1, y1, x2, y2],
-                                      'text': license_plate_text,
-                                      'bbox_score': score,
-                                      'text_score': license_plate_text_score}}
-                print("Patente:", license_plate_text)
-                print("Detectada en un:", "{:.2f}".format(license_plate_text_score * 100), "% de confianza")
-                #http_post(license_plate_text_score, license_plate_text)
+                    'license_plate': {
+                        'bbox': [x1, y1, x2, y2],
+                        'text': license_plate_text,
+                        'bbox_score': score,
+                        'text_score': license_plate_text_score
+                    }
+                }
+                print("License plate:", license_plate_text)
+                print("Detected with", "{:.2f}".format(license_plate_text_score * 100), "% confidence")
+                photo = "sample" + str(frame_nmr) + ".jpg"
+                #http_post(license_plate_text_score, photo, license_plate_text)
 
         labels = [
             f"{license_plate_model.model.names[class_id]} {confidence:0.2f}"
