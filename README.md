@@ -35,7 +35,7 @@ _El entorno de desarrollo utilizado fue Windows 10 Version 22H2 (OS Build 19045.
 
   ```
   git clone <link> detector-script
-  cd detector-api
+  cd detector-script
   ```
   
 - Luego se debe construir la imagen de Docker
