@@ -68,7 +68,7 @@ def main():
     """
     Main function
     """
-    cap = cv2.VideoCapture("video/sample.mp4")
+    cap = cv2.VideoCapture("video/test.mp4")
     license_plate_model = YOLO('model/licence_plate.pt')
     results = {}
     frame_nmr = 0
