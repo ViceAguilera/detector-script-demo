@@ -6,7 +6,6 @@ import requests
 import cv2
 import easyocr
 from ultralytics import YOLO
-import supervision as sv
 
 reader = easyocr.Reader(['en'] , gpu=False)
 
@@ -69,21 +68,8 @@ def main():
     """
     Main function
     """
-    frame_width = 1280
-    frame_height = 720
-
     cap = cv2.VideoCapture("video/sample.mp4")
-
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, frame_width)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
-
     license_plate_model = YOLO('model/licence_plate.pt')
-
-    box_annotator = sv.BoxAnnotator(
-        thickness=2,
-        text_thickness=2,
-        text_scale=1
-    )
     results = {}
     frame_nmr = 0
     while True:
@@ -92,7 +78,6 @@ def main():
             print("Error: failed to capture image")
             break
         result = license_plate_model(frame, agnostic_nms=True)[0]
-        detections = sv.Detections.from_yolov8(result)
         results[frame_nmr] = {}
         for detection in result.boxes.data.tolist():
             x1, y1, x2, y2, score, class_id = detection
@@ -114,18 +99,8 @@ def main():
                 print("License plate:", license_plate_text)
                 print("Detected with", "{:.2f}".format(license_plate_text_score * 100), "% confidence")
                 photo = "sample" + str(frame_nmr) + ".jpg"
-                http_post(license_plate_text_score, photo, license_plate_text)
+                #http_post(license_plate_text_score, photo, license_plate_text)
 
-        labels = [
-            f"{license_plate_model.model.names[class_id]} {confidence:0.2f}"
-            for _, confidence, class_id, _
-            in detections
-        ]
-        frame = box_annotator.annotate(
-            scene=frame,
-            detections=detections,
-            labels=labels
-        )
         frame_nmr += 1
 
     cap.release()
