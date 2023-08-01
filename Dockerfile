@@ -10,5 +10,7 @@ RUN pip uninstall -y Pillow
 
 RUN pip install Pillow==9.0.1
 
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
+
 CMD ["python3.9", "main.py"]
 
