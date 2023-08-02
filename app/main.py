@@ -71,6 +71,7 @@ def main():
     cap = cv2.VideoCapture("video/test.mp4")
     license_plate_model = YOLO('model/licence_plate.pt')
     results = {}
+    last_license_plate = None
     frame_nmr = 0
     while True:
         ret, frame = cap.read()
@@ -88,6 +89,9 @@ def main():
             license_plate_text, license_plate_text_score = read_license_plate(license_plate_crop_thresh)
 
             if license_plate_text is not None:
+                if last_license_plate is not None and license_plate_text == last_license_plate:
+                    print("¡Same license plate as before detected!")
+                    continue
                 results[frame_nmr] = {
                     'license_plate': {
                         'bbox': [x1, y1, x2, y2],
@@ -100,6 +104,7 @@ def main():
                 print("Detected with", "{:.2f}".format(license_plate_text_score * 100), "% confidence")
                 photo = "sample" + str(frame_nmr) + ".jpg"
                 #http_post(license_plate_text_score, photo, license_plate_text)
+                last_license_plate = license_plate_text
 
         frame_nmr += 1
 

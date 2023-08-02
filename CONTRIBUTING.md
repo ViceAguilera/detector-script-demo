@@ -1,14 +1,17 @@
 # Guia de contribución
 
+### Autores
+
+- Vicente Aguilera Arias - Desarrollo de Script detector - vicente.aguilera2001@alumnos.ubiobio.cl
+- Camilo Sáez Garrido - Desarrollo de la API - camilo.saez1601@alumnos.ubiobio.cl
+
 ### Estandares de codificación
 
 El estilo de codificación de Python se basa en [PEP 8 -- Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/).
 
 ### Configuracion de editor de codigo
 
-Se recomienda utilizar el editor de código [Visual Studio Code](https://code.visualstudio.com/) con las siguientes extensiones:
-
-- [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+Se recomienda utilizar el editor de código [Pycharm](https://www.jetbrains.com/es-es/pycharm/download/?section=windows).
 
 Configuraciones generales:
 
