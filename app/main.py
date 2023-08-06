@@ -1,13 +1,17 @@
 """
 Main script for processing license plate detection and recognition.
 """
+import os
 import json
 import requests
 import cv2
 import easyocr
 from ultralytics import YOLO
+from dotenv import load_dotenv
 
 reader = easyocr.Reader(['en'] , gpu=False)
+dotenv_path = os.path.join(os.path.dirname(__file__), 'config', '.env')
+load_dotenv(dotenv_path)
 
 def http_post(score, img_name, text):
     """
@@ -21,7 +25,7 @@ def http_post(score, img_name, text):
     Returns:
         None
     """
-    url = "http://localhost:8000/api/registers"
+    url = f"http://{os.environ['HOST']}:{os.environ['PORT']}/api/registers"
 
     data = {
         "prediction_accuracy": score,
@@ -34,13 +38,17 @@ def http_post(score, img_name, text):
 
     headers = {'Content-Type': 'application/json'}
 
-    response = requests.post(url, data=json_data, headers=headers, timeout=10)
+    try:
+        response = requests.post(url, data=json_data, headers=headers, timeout=10)
 
-    if response.status_code == 200:
-        print("The request was sent successfully.")
-    else:
-        print(response.status_code)
-        print("An error occurred while sending the request.")
+        if response.status_code == 200:
+            print("The request was sent successfully.")
+        else:
+            print(response.status_code)
+            print("An error occurred while sending the request.")
+    except requests.exceptions.RequestException as e:
+        print("An error occurred during the HTTP POST request:")
+        print(e)
 
 def read_license_plate(license_plate_crop):
     """
@@ -59,7 +67,7 @@ def read_license_plate(license_plate_crop):
         _, text, score = detection
 
         text = text.upper().replace(' ', '')
-        if len(text) >= 6 and len(text) <= 10 and text.isalnum() and score >= 0.7 and not text.isalpha():
+        if len(text) >= 6 and len(text) <= 9 and text.isalnum() and score >= 0.7 and not text.isalpha():
             return text, score
 
     return None, None
@@ -103,7 +111,7 @@ def main():
                 print("License plate:", license_plate_text)
                 print("Detected with", "{:.2f}".format(license_plate_text_score * 100), "% confidence")
                 photo = "sample" + str(frame_nmr) + ".jpg"
-                #http_post(license_plate_text_score, photo, license_plate_text)
+                http_post(license_plate_text_score, photo, license_plate_text)
                 last_license_plate = license_plate_text
 
         frame_nmr += 1

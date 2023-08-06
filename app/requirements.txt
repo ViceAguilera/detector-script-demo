@@ -1,3 +1,5 @@
 opencv-python
 ultralytics
 easyocr
+python-dotenv
+

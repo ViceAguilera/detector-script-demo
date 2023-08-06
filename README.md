@@ -36,7 +36,7 @@ _El entorno de desarrollo utilizado fue Windows 10 Version 22H2 (OS Build 19045.
 
 - Despues se debe ejecutar el contenedor de Docker
   ```bash
-  docker run -p 8001:8001 -v "$(pwd)/app:/app" --name detector-script detector-script
+  docker run -v "$(pwd)\app:\app" --name detector-script detector-script
   ```
 
 _La versión de Docker utilizada para desarrollo fue 23.0.5, build bc4487a_
@@ -54,12 +54,12 @@ Para poder ejecutar el proyecto se necesita tener instalado:
 
 - Se debe instalar venv
   ```bash
-  apt-get install python3.9-venv
+  sudo apt-get install python3.9-venv
   ```
   
 - Se debe instalar un packete para OpenCV
   ```bash
-  apt-get update && apt-get install -y libgl1-mesa-glx
+  sudo apt-get update && apt-get install -y libgl1-mesa-glx
   ```
 
 - Se clona el repositorio de GitHub
@@ -79,8 +79,13 @@ Para poder ejecutar el proyecto se necesita tener instalado:
   
 - Se activa el entorno virtual
   ```bash
-    source venv/bin/activate
-    ```
+  source venv/bin/activate
+  ```
+  
+- Se ingresa a la carpeta app
+  ```bash
+  cd app
+  ```
 
 - Se instala los requerimientos del proyecto
   ```bash
@@ -89,12 +94,17 @@ Para poder ejecutar el proyecto se necesita tener instalado:
 
 - Se desinstala la libreria Pillow 10.0.0
   ```bash
-  pip uninstall Pillow
+  pip uninstall -y Pillow
   ```
 
 - Se instala una version anterior de Pillow
   ```bash
   pip install Pillow==9.0.1
+  ```
+
+- Se ejecuta el script
+  ```bash
+  python3.9 main.py
   ```
 
 ## Construido con 
@@ -109,7 +119,3 @@ Este proyecto está bajo la Licencia X - mira el archivo [LICENSE.md](LICENSE.md
 ## Contribuyendo 🖇️
 
 Por favor lee el [CONTRIBUTING.md](CONTRIBUTING.md) para detalles de nuestro código de conducta, y el proceso para enviarnos pull requests.
-
-## Autores ✒️
-
-[**Camilo Sáez Garrido**](https://github.com/camjasaez) & [**Vicente Aguilera Arias**](https://github.com/ViceAguilera)
