@@ -72,6 +72,6 @@ app
 Contraer
 CONTRIBUTING.md
 5 KB
-# Licencia X
+# Licencia GNU Affero General Public License v3.0
 LICENSE.md
 1 KB
