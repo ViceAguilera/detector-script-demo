@@ -15,6 +15,8 @@ Para poder ejecutar el proyecto se necesita tener instalado:
 - [Git](https://git-scm.com/downloads) - Control de versiones de código
 - [Docker](https://docs.docker.com/get-docker/) - Contenedores de aplicaciones para el desarrollo y despliegue de software
 
+_❗Se debe cambiar la variable de entorno dentro del archivo .env.example a la variable de entorno de la maquina_
+
 _El entorno de desarrollo utilizado fue Windows 10 Version 22H2 (OS Build 19045.3208)_
 
 ### Configuraciones de ejecución para entorno de desarrollo
@@ -47,6 +49,9 @@ Para poder ejecutar el proyecto se necesita tener instalado:
 
 - [Ubuntu](https://ubuntu.com/download) - Control de versiones de código
 - [Git](https://git-scm.com/downloads) - Contenedores de aplicaciones para el desarrollo y despliegue de software
+
+_❗Se debe cambiar la variable de entorno dentro del archivo .env.example a la variable de entorno de la maquina_
+
 
 ### Configuraciones de ejecución para entorno de produccion
 
