@@ -50,7 +50,6 @@ def http_post(score, img_name, text):
             print("An error occurred while sending the request.")
     except requests.exceptions.RequestException as e:
         print("An error occurred during the HTTP POST request:")
-        print(e)
 
 def read_license_plate(license_plate_crop):
     """
