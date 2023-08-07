@@ -102,6 +102,16 @@ Para poder ejecutar el proyecto se necesita tener instalado:
   pip install Pillow==9.0.1
   ```
 
+- Se cambia el nombre al archivo .env.example
+  ```bash
+  mv .env.example .env
+  ```
+
+- Se le cambian las variables de entorno HOST y PORT al archivo .env
+  ```bash
+  nano .env
+  ```
+
 - Se ejecuta el script
   ```bash
   python3.9 main.py
@@ -118,4 +128,4 @@ Este proyecto está bajo la GNU Affero General Public License v3.0 - mira el arc
 
 ## Contribuyendo 🖇️
 
-Por favor lee el [CONTRIBUTING.md](CONTRIBUTING.md) para detalles de nuestro código de conducta, y el proceso para enviarnos pull requests.
+Por favor lee el [CONTRIBUTING.md](CONTRIBUTING.md) para mas detalles.
