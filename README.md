@@ -102,7 +102,7 @@ Para poder ejecutar el proyecto se necesita tener instalado:
   pip install Pillow==9.0.1
   ```
 
-- Se cambia el nombre al archivo .env.example
+- Se agregan el nombre al archivo .env.example
   ```bash
   mv .env.example .env
   ```
