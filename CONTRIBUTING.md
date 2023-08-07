@@ -61,17 +61,6 @@ app
 - Las ramas de desarrollo de corrección de errores se crean a partir de la rama `develop` y se nombran con el prefijo `bugfix/` seguido del nombre del error.
 - Una vez finalizada la funcionalidad o corrección de errores se debe crear un pull request a la rama `develop` para su revisión y posterior fusión.
 
-#### Commits
+## Licencia 📄
 
-#### Analiis de codigo
-
-```
-
-```
-... (1 línea restante)
-Contraer
-CONTRIBUTING.md
-5 KB
-# Licencia GNU Affero General Public License v3.0
-LICENSE.md
-1 KB
+Este proyecto está bajo la GNU Affero General Public License v3.0 - mira el archivo [LICENSE](LICENSE) para detalles

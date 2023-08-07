@@ -114,7 +114,7 @@ Para poder ejecutar el proyecto se necesita tener instalado:
 
 ## Licencia 📄
 
-Este proyecto está bajo la Licencia X - mira el archivo [LICENSE.md](LICENSE.md) para detalles
+Este proyecto está bajo la GNU Affero General Public License v3.0 - mira el archivo [LICENSE](LICENSE) para detalles
 
 ## Contribuyendo 🖇️
 
