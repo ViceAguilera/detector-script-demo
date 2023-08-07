@@ -2,7 +2,7 @@ venv/
 .venv
 idea/
 .idea
-config/.env
+app/.env
 .env
 
 # User-specific stuff

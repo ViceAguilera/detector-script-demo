@@ -10,8 +10,7 @@ from ultralytics import YOLO
 from dotenv import load_dotenv
 
 reader = easyocr.Reader(['en'] , gpu=False)
-dotenv_path = os.path.join(os.path.dirname(__file__), 'config', '.env')
-load_dotenv(dotenv_path)
+load_dotenv()
 
 def http_post(score, img_name, text):
     """
@@ -25,7 +24,10 @@ def http_post(score, img_name, text):
     Returns:
         None
     """
-    url = f"http://{os.environ['HOST']}:{os.environ['PORT']}/api/registers"
+    host = os.getenv("HOST")
+    port = os.getenv("PORT")
+
+    url = f"http://{host}:{port}/api/registers"
 
     data = {
         "prediction_accuracy": score,
