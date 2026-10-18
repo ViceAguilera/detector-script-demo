@@ -1,136 +1,109 @@
-# Prototipo de detector de patentes para el control de acceso en tiempo real
+# Prototipo de detector de patentes para control de acceso
 
-###### **🚧 V0.3.0 Beta development.🚧🔨**
+Prototipo de reconocimiento automático de patentes vehiculares sobre un video de prueba, con detección YOLO y lectura de texto por OCR.
 
-_Sistema de reconocimiento automático de matrículas vehiculares y API para el control de acceso en tiempo real_
+![Python](https://img.shields.io/badge/Python-3.9-3776AB?style=flat&logo=python&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![Licencia](https://img.shields.io/badge/licencia-AGPL--3.0-blue?style=flat)
+![Último commit](https://img.shields.io/github/last-commit/ViceAguilera/detector-script-demo?style=flat)
 
-## Construido con 🛠️
+## Descripción
 
-- [Python v3.9](https://www.python.org/) - Lenguaje de programación
+Primera versión (0.3.0 beta) del detector de patentes que dio origen a un proyecto de tesis de control de acceso. Procesa un video, localiza las patentes con un modelo YOLO propio, las lee con EasyOCR y envía cada lectura a una API HTTP. Se desarrolló en colaboración con Camilo Sáez Garrido, quien construyó la API. La versión posterior está en [detector-script-tesis](https://github.com/ViceAguilera/detector-script-tesis).
 
-### Pre-requisitos de desarrollo 📋
+## Características
 
-Para poder ejecutar el proyecto se necesita tener instalado:
+- Detección de patentes con un modelo YOLO (`app/model/licence_plate.pt`).
+- Lectura del texto con EasyOCR sobre la imagen en escala de grises y binarizada.
+- Validación del texto: entre 6 y 9 caracteres alfanuméricos, confianza mínima de 0.7 y no compuesto solo por letras.
+- Omite lecturas consecutivas idénticas.
+- Envío del resultado (patente, confianza y nombre de imagen) por POST a `/api/registers` del servidor configurado.
+- Ejecución local con entorno virtual o en contenedor Docker.
 
-- [Git](https://git-scm.com/downloads) - Control de versiones de código
-- [Docker](https://docs.docker.com/get-docker/) - Contenedores de aplicaciones para el desarrollo y despliegue de software
+## Tecnologías
 
-_❗Se debe cambiar la variable de entorno dentro del archivo .env.example a la variable de entorno de la maquina_
+- Python 3.9
+- [Ultralytics](https://ultralytics.com/) (YOLO)
+- [OpenCV](https://opencv.org/)
+- [EasyOCR](https://www.jaided.ai/easyocr/)
+- python-dotenv
+- Docker
 
-_El entorno de desarrollo utilizado fue Windows 10 Version 22H2 (OS Build 19045.3208)_
+## Requisitos
 
-### Configuraciones de ejecución para entorno de desarrollo
+- Git
+- Docker (entorno de desarrollo original: Docker 23.0.5 sobre Windows 10), o bien Python 3.9 con `venv` en Linux
+- Un servidor con la API de registros, cuyo host y puerto se definen en `app/.env`
 
-#### Instalacion
+## Instalación
 
-- Para instalar el proyecto se debe clonar el repositorio y nos posicionamos en la carpeta del proyecto.
+Clona el repositorio:
 
-  ```bash
-  git clone https://github.com/ViceAguilera/detector-script-tesis.git detector-script
-  cd detector-script
-  ```
-  
-- Luego se debe construir la imagen de Docker
+```bash
+git clone https://github.com/ViceAguilera/detector-script-demo.git
+cd detector-script-demo
+```
 
-  ```bash
-  docker build -t detector-script .
-  ```
+Configura las variables de entorno en `app/` (renombra `.env.example` a `.env` y completa `HOST` y `PORT`):
 
-- Despues se debe ejecutar el contenedor de Docker
-  ```bash
-  docker run -v "$(pwd)\app:\app" --name detector-script detector-script
-  ```
+```
+HOST=
+PORT=
+```
 
-_La versión de Docker utilizada para desarrollo fue 23.0.5, build bc4487a_
+### Con Docker
 
-### Pre-requisitos de produccion 📋
+```bash
+docker build -t detector-script .
+docker run --name detector-script detector-script
+```
 
-Para poder ejecutar el proyecto se necesita tener instalado:
+### Sin Docker (Linux)
 
-- [Ubuntu](https://ubuntu.com/download) - Control de versiones de código
-- [Git](https://git-scm.com/downloads) - Contenedores de aplicaciones para el desarrollo y despliegue de software
+```bash
+sudo apt-get install python3.9-venv
+sudo apt-get update && sudo apt-get install -y libgl1-mesa-glx
+python3.9 -m venv venv
+source venv/bin/activate
+cd app
+pip install -r requirements.txt
+# El proyecto original usa una versión anterior de Pillow
+pip uninstall -y Pillow
+pip install Pillow==9.0.1
+```
 
-_❗Se debe cambiar la variable de entorno dentro del archivo .env.example a la variable de entorno de la maquina_
+## Uso
 
+```bash
+cd app
+python3.9 main.py
+```
 
-### Configuraciones de ejecución para entorno de produccion
+El script lee `app/video/test.mp4` y, por cada patente detectada, imprime el texto y la confianza y la envía a la API.
 
-#### Instalacion
+## Estructura del proyecto
 
-- Se debe instalar venv
-  ```bash
-  sudo apt-get install python3.9-venv
-  ```
-  
-- Se debe instalar un packete para OpenCV
-  ```bash
-  sudo apt-get update && apt-get install -y libgl1-mesa-glx
-  ```
+```
+app/
+├── main.py            # Detección, OCR y envío a la API
+├── model/             # Modelo de patentes (licence_plate.pt)
+├── video/test.mp4     # Video de prueba
+├── requirements.txt   # Dependencias
+└── .env.example       # Plantilla de variables de entorno
+Dockerfile             # Imagen del contenedor
+CONTRIBUTING.md        # Guía de contribución
+```
 
-- Se clona el repositorio de GitHub
-  ```bash
-  git clone https://github.com/ViceAguilera/detector-script-tesis.git detector-script
-  ```
-  
-- Se ingresa a la carpeta del proyecto
-  ```bash
-  cd detector-script
-  ```
-  
-- Se crea un entorno virtual
-  ```bash
-  python3.9 -m venv venv
-  ```
-  
-- Se activa el entorno virtual
-  ```bash
-  source venv/bin/activate
-  ```
-  
-- Se ingresa a la carpeta app
-  ```bash
-  cd app
-  ```
+## Contribuir
 
-- Se instala los requerimientos del proyecto
-  ```bash
-  pip install -r requirements.txt
-  ```
+Revisa la [guía de contribución](CONTRIBUTING.md).
 
-- Se desinstala la libreria Pillow 10.0.0
-  ```bash
-  pip uninstall -y Pillow
-  ```
+## Licencia
 
-- Se instala una version anterior de Pillow
-  ```bash
-  pip install Pillow==9.0.1
-  ```
+Distribuido bajo la licencia GNU AGPL-3.0. Ver [LICENSE](LICENSE).
 
-- Se agregan el nombre al archivo .env.example
-  ```bash
-  mv .env.example .env
-  ```
+## Autores
 
-- Se le cambian las variables de entorno HOST y PORT al archivo .env
-  ```bash
-  nano .env
-  ```
+**Vicente Aguilera Arias** — [Portafolio](https://portfolio.iamsirius.cl) · [GitHub](https://github.com/ViceAguilera) · [LinkedIn](https://www.linkedin.com/in/vicenteaguilera/)
 
-- Se ejecuta el script
-  ```bash
-  python3.9 main.py
-  ```
-
-## Construido con 
-- [OpenCV](https://opencv.org/) - Librería de visión artificial
-- [Easy OCR](https://www.jaided.ai/easyocr/) - Librería de reconocimiento óptico de caracteres
-- [Ultralytics](https://ultralytics.com/) - Librería de modelo de detección de objetos
-
-## Licencia 📄
-
-Este proyecto está bajo la GNU Affero General Public License v3.0 - mira el archivo [LICENSE](LICENSE) para detalles
-
-## Contribuyendo 🖇️
-
-Por favor lee el [CONTRIBUTING.md](CONTRIBUTING.md) para mas detalles.
+Colaborador: [Camilo Sáez Garrido](https://github.com/camjasaez) (API)
