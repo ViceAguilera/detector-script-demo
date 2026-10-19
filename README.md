@@ -4,12 +4,34 @@ Prototipo de reconocimiento automático de patentes vehiculares sobre un video d
 
 ![Python](https://img.shields.io/badge/Python-3.9-3776AB?style=flat&logo=python&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![Estado](https://img.shields.io/badge/estado-terminado-blue?style=flat)
 ![Licencia](https://img.shields.io/badge/licencia-AGPL--3.0-blue?style=flat)
 ![Último commit](https://img.shields.io/github/last-commit/ViceAguilera/detector-script-demo?style=flat)
+
+<!-- Demo: agrega una captura o GIF en docs/demo.gif y descomenta la línea siguiente -->
+<!-- <p align="center"><img src="docs/demo.gif" alt="Demostración del prototipo de detector de patentes" width="800"></p> -->
+
+## Tabla de contenidos
+
+- [Descripción](#descripción)
+- [Estado del proyecto](#estado-del-proyecto)
+- [Características](#características)
+- [Tecnologías](#tecnologías)
+- [Requisitos](#requisitos)
+- [Instalación](#instalación)
+- [Uso](#uso)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Contribuir](#contribuir)
+- [Licencia](#licencia)
+- [Autores](#autores)
 
 ## Descripción
 
 Primera versión (0.3.0 beta) del detector de patentes que dio origen a un proyecto de tesis de control de acceso. Procesa un video, localiza las patentes con un modelo YOLO propio, las lee con EasyOCR y envía cada lectura a una API HTTP. Se desarrolló en colaboración con Camilo Sáez Garrido, quien construyó la API. La versión posterior está en [detector-script-tesis](https://github.com/ViceAguilera/detector-script-tesis).
+
+## Estado del proyecto
+
+**Terminado.** Primera versión (0.3.0 beta), reemplazada por detector-script-tesis; no recibe mantenimiento activo.
 
 ## Características
 
