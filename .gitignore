@@ -305,3 +305,8 @@ pip-selfcheck.json
 
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,venv,python
+
+# Archivos de asistentes de IA
+.claude/
+CLAUDE.md
+AGENTS.md
